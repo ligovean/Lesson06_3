@@ -46,10 +46,7 @@ public class Controller  implements Initializable {
                                 textArea.appendText(msg + "\n");
                         }
                     } catch (IOException e) {
-                        textArea.appendText("====Клиент отключен от сервера====");
-                        btn1.setDisable(true);
-                        textField.setDisable(true);
-                        textField.setText("Нет связи с сервером");
+                        disconnect();
                         //e.printStackTrace();
                     }
                     finally {
@@ -65,10 +62,7 @@ public class Controller  implements Initializable {
             streamT.start();
 
         } catch (IOException e) {
-            textArea.appendText("====Нет связи с сервером====");
-            btn1.setDisable(true);
-            textField.setDisable(true);
-            textField.setText("Нет связи с сервером");
+            disconnect();
             //e.printStackTrace();
         }
     }
@@ -85,5 +79,12 @@ public class Controller  implements Initializable {
                 //e.printStackTrace();
             }
         }
+    }
+
+    public void disconnect(){
+        textArea.appendText("====Нет связи с сервером====");
+        btn1.setDisable(true);
+        textField.setDisable(true);
+        textField.setText("Нет связи с сервером");
     }
 }

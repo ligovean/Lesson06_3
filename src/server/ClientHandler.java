@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class ClientHandler {
@@ -26,23 +28,26 @@ public class ClientHandler {
                     output = new DataOutputStream(socket.getOutputStream());
 
                     server.broadcastMsg("======/" + name + " вошел в чат!/======");
-
+                    System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")) + " ======/" + name + " вошел в чат!/======");
                     while (true) {
                         String msg = input.readUTF();
                         System.out.println(msg);
+                        //Остановка клиента по стопслову /end
                         if(msg.equals("/end")) {
-                            System.out.println("Сокет " + socket.getRemoteSocketAddress() + " закрыт!");
+                            System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")) + " ======/" + name + " покинул в чат!/======");
                             dropClientEntyty();
+                            //Трансляция сообщения о том, что клиент вышел из чата
                             server.broadcastMsg("======/" + name + " покинул в чат!/======");
                             socket.close();
                             break;
                         }
-                        //output.writeUTF("Client " + socket.getRemoteSocketAddress() + ": " + msg);
+                        //Трансляция сообщения во все клиенты
                         server.broadcastMsg(name + ": " + msg);
                     }
                 } catch (IOException e) {
-                    System.out.println("Клиент " + name + " закрыл чат!");
+                    System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")) + " ======/" + name + " покинул в чат!/======");
                     dropClientEntyty();
+                    //Трансляция сообщения о том, что клиент вышел из чата
                     server.broadcastMsg("======/" + name + " покинул в чат!/======");
                     //e.printStackTrace();
                 }finally {

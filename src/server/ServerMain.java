@@ -23,7 +23,7 @@ public class ServerMain {
                 while (true){
                     socket = serverSocket.accept();
                     ++clientInd;
-                    System.out.println("Клиент " + clientInd + " подключился. RSA: " + socket.getRemoteSocketAddress());
+                    //System.out.println("Клиент " + clientInd + " подключился. RSA: " + socket.getRemoteSocketAddress());
                     clientPool.add(new ClientHandler(socket,this, "Client " + clientInd));
                 }
 
