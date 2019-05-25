@@ -82,7 +82,7 @@ public class Controller  implements Initializable {
     }
 
     public void disconnect(){
-        textArea.appendText("====Нет связи с сервером====");
+        textArea.appendText("======/Нет связи с сервером/=====");
         btn1.setDisable(true);
         textField.setDisable(true);
         textField.setText("Нет связи с сервером");
