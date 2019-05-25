@@ -26,6 +26,7 @@ public class Controller  implements Initializable {
 
     final String IP_ADRESS = "localhost";
     final int PORT = 9999;
+    //final int PORT = 8189;
 
     //Инициализация подключения к серверу
     @Override

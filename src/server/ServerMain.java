@@ -44,6 +44,9 @@ public class ServerMain {
         }
 
     }
+    public void dropClientEntyty(ClientHandler client){
+        clientPool.remove(client);
+    }
 
     public void broadcastMsg(String msgAll) {
         for (ClientHandler clients:clientPool) {

@@ -32,6 +32,7 @@ public class ClientHandler {
                         System.out.println(msg);
                         if(msg.equals("/end")) {
                             System.out.println("Сокет " + socket.getRemoteSocketAddress() + " закрыт!");
+                            dropClientEntyty();
                             socket.close();
                             break;
                         }
@@ -53,6 +54,7 @@ public class ClientHandler {
                     }
                     try {
                         socket.close();
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -67,5 +69,9 @@ public class ClientHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void dropClientEntyty(){
+        server.dropClientEntyty(this);
     }
 }
