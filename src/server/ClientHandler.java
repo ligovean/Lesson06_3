@@ -33,6 +33,7 @@ public class ClientHandler {
                         if(msg.equals("/end")) {
                             System.out.println("Сокет " + socket.getRemoteSocketAddress() + " закрыт!");
                             dropClientEntyty();
+                            server.broadcastMsg("======/" + name + " покинул в чат!/======");
                             socket.close();
                             break;
                         }
@@ -40,7 +41,10 @@ public class ClientHandler {
                         server.broadcastMsg(name + ": " + msg);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("Клиент " + name + " закрыл чат!");
+                    dropClientEntyty();
+                    server.broadcastMsg("======/" + name + " покинул в чат!/======");
+                    //e.printStackTrace();
                 }finally {
                     try {
                         input.close();

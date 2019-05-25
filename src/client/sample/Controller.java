@@ -2,12 +2,12 @@ package client.sample;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
@@ -19,6 +19,8 @@ public class Controller  implements Initializable {
     TextArea textArea;
     @FXML
     TextField textField;
+    @FXML
+    Button btn1;
 
     Socket socket;
     DataInputStream input;
@@ -35,18 +37,21 @@ public class Controller  implements Initializable {
             socket = new Socket(IP_ADRESS, PORT);
             input = new DataInputStream(socket.getInputStream()); //Данные входящего потока с Сервера
             output = new DataOutputStream(socket.getOutputStream()); //Данные исходящего потока на Сервер
-
-            new Thread(new Runnable() {
+            Thread streamT = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     String msg = null;
                     try {
                         while (true) {
-                            msg = input.readUTF();
-                            textArea.appendText(msg + "\n");
+                                msg = input.readUTF();
+                                textArea.appendText(msg + "\n");
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        textArea.appendText("====Клиент отключен от сервера====");
+                        btn1.setDisable(true);
+                        textField.setDisable(true);
+                        textField.setText("Нет связи с сервером");
+                        //e.printStackTrace();
                     }
                     finally {
                         try {
@@ -56,10 +61,16 @@ public class Controller  implements Initializable {
                         }
                     }
                 }
-            }).start();
+            });
+            streamT.setDaemon(true);
+            streamT.start();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            textArea.appendText("====Нет связи с сервером====");
+            btn1.setDisable(true);
+            textField.setDisable(true);
+            textField.setText("Нет связи с сервером");
+            //e.printStackTrace();
         }
     }
 
@@ -72,7 +83,7 @@ public class Controller  implements Initializable {
                 textField.clear();
                 textField.requestFocus();
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
     }
