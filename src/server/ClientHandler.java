@@ -34,10 +34,10 @@ public class ClientHandler {
                         System.out.println(msg);
                         //Остановка клиента по стопслову /end
                         if(msg.equals("/end")) {
-                            System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")) + " ======/" + name + " покинул в чат!/======");
+                            System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")) + " ======/" + name + " покинул чат!/======");
                             dropClientEntyty();
                             //Трансляция сообщения о том, что клиент вышел из чата
-                            server.broadcastMsg("======/" + name + " покинул в чат!/======");
+                            server.broadcastMsg("======/" + name + " покинул чат!/======");
                             socket.close();
                             break;
                         }
@@ -45,10 +45,10 @@ public class ClientHandler {
                         server.broadcastMsg(name + ": " + msg);
                     }
                 } catch (IOException e) {
-                    System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")) + " ======/" + name + " покинул в чат!/======");
+                    System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")) + " ======/" + name + " покинул чат!/======");
                     dropClientEntyty();
                     //Трансляция сообщения о том, что клиент вышел из чата
-                    server.broadcastMsg("======/" + name + " покинул в чат!/======");
+                    server.broadcastMsg("======/" + name + " покинул чат!/======");
                     //e.printStackTrace();
                 }finally {
                     try {
@@ -80,7 +80,7 @@ public class ClientHandler {
         }
     }
 
-    public void dropClientEntyty(){
+    private void dropClientEntyty(){
         server.dropClientEntyty(this);
     }
 }
